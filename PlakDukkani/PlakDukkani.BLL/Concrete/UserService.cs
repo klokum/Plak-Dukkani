@@ -70,9 +70,9 @@ namespace PlakDukkani.BLL.Concrete
             return userResult;
         }
 
-        public ResultService<bool> ActivedUser(Guid guid)
+        public ResultService<bool> ActivateUser(Guid guid)
         {
-                ResultService<bool> result = new ResultService<bool>();
+            ResultService<bool> result = new ResultService<bool>();
             try
             {
                 User user = userRepository.Get(a => a.ActivationCode == guid && !a.IsActive);

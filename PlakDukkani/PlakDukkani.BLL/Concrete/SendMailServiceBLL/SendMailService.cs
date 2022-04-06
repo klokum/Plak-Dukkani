@@ -25,7 +25,7 @@ namespace PlakDukkani.BLL.Concrete.SendMailServiceBLL
             smtp.Host = "smtp.radorehosting.com";
             smtp.EnableSsl = true;
             smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("cinemasystem@sinemamekani.com", "&ybP74Cd?b2BZch");
+            smtp.Credentials = new NetworkCredential("bilgeadam@sinemamekani.com", "Asd*123456");
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 
             try

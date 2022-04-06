@@ -32,9 +32,15 @@ namespace PlakDukkani.UI.MVC.Controllers
             return View();
         }
 
-        public IActionResult ActivedUser(Guid guid)
+        //User/Actived/4593ş53-34530001
+        [HttpGet("{guid}")]
+        public IActionResult ActivedUser(Guid id)
         {
-            ResultService<bool> result = userService.ActivedUser(guid);
+            ResultService<bool> result = userService.ActivateUser(id);
+            if (result.Data)
+            {
+                return RedirectToAction(nameof(Login), nameof(UserController));
+            }
             return View();
         }
         
