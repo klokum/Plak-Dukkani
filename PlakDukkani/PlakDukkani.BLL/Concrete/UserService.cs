@@ -72,22 +72,30 @@ namespace PlakDukkani.BLL.Concrete
 
         public ResultService<bool> ActivedUser(Guid guid)
         {
-            ResultService<bool> result = new ResultService<bool>();
-            User user = userRepository.Get(a => a.ActivationCode == guid && !a.IsActive);
-            if (user == null)
+                ResultService<bool> result = new ResultService<bool>();
+            try
             {
-                result.AddError("null hatası", "Bu guide sahip user yok");
+                User user = userRepository.Get(a => a.ActivationCode == guid && !a.IsActive);
+                if (user == null)
+                {
+                    result.AddError("null hatası", "Bu guide sahip user yok");
+                    return result;
+                }
+                user.IsActive = true;
+                User updatedUser = userRepository.Update(user);
+                if (updatedUser == null)
+                {
+                    result.AddError("update hatası", "Update başarılı değil");
+                    return result;
+                }
+                result.Data = true;
                 return result;
             }
-            user.IsActive = true;
-            User updatedUser = userRepository.Update(user);
-            if (updatedUser==null)
+            catch (Exception ex)
             {
-                result.AddError("update hatası", "Update başarılı değil");
+                result.AddError("Exception", ex.Message);
                 return result;
             }
-            result.Data = true;
-            return result;
         }
 
     }
