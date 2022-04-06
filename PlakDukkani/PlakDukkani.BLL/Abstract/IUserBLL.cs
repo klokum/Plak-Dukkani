@@ -8,6 +8,6 @@ namespace PlakDukkani.BLL.Abstract
     public interface IUserBLL : IBaseBLL<User>
     {
         public ResultService<UserCreateVM> Insert(UserCreateVM user);
-        bool ActivedUser(Guid guid);
+        ResultService<bool> ActivedUser(Guid guid);
     }
 }

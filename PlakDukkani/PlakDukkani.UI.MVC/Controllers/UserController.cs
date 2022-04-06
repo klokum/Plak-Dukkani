@@ -34,7 +34,7 @@ namespace PlakDukkani.UI.MVC.Controllers
 
         public IActionResult ActivedUser(Guid guid)
         {
-            bool result = userService.ActivedUser(guid);
+            ResultService<bool> result = userService.ActivedUser(guid);
             return View();
         }
         
