@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using PlakDukkani.BLL.Abstract;
 using PlakDukkani.BLL.Concrete.ResultServiceBLL;
 using PlakDukkani.ViewModel.Constraints;
@@ -47,14 +48,30 @@ namespace PlakDukkani.UI.MVC.Controllers
         
         [HttpGet]
         public IActionResult Login()
-        {    
-            
+        {
+            if (Request.Cookies["cookie"] != null)
+            {
+                string bilgi = Request.Cookies["cookie"];
+                string[] bilgiParcasi = bilgi.Split(" "); 
+                UserLoginVM userLogin = new UserLoginVM();
+                userLogin.Email = bilgiParcasi[0];
+                userLogin.Password = bilgiParcasi[1];
+                userLogin.IsRemember = true;
+                return View(userLogin);
+            }
             return View();
         }
 
         [HttpPost]
         public IActionResult Login(UserLoginVM user)
         {
+            if (user.IsRemember)
+            {
+                CookieOptions cookieOptions = new CookieOptions();
+                cookieOptions.Expires = DateTime.Now.AddDays (5);
+                Response.Cookies.Append("cookie", user.Email + " " + user.Password, cookieOptions);
+            }
+
             if (ModelState.IsValid)
             {
                 ResultService<bool> result = userService.CheckUserForLogin(user.Email, user.Password);
