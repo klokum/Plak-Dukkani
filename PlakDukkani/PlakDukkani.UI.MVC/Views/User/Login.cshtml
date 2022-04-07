@@ -8,7 +8,16 @@
         <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(../../img/bg-img/breadcumb3.jpg);">
         <div class="bradcumbContent">
             <p>See what’s new</p>
-            <h2>Login</h2>
+
+            @if(ViewBag.Message != null)
+            {
+                <h3>@ViewBag.Message</h3>
+            }
+            else
+            {
+                <h3>Login</h3>
+            }
+
         </div>
         </section>
     <!-- ##### Breadcumb Area End ##### -->
@@ -38,7 +47,7 @@
                                         <label asp-for="IsRemember">Beni Hatırla</label>
                                     </div>
                                     <button type="submit" class="btn oneMusic-btn mt-30">Login</button>
-                            </form>>
+                            </form>
                         </div>
                     </div>
                 </div>

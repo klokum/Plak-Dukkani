@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PlakDukkani.BLL.Abstract;
 using PlakDukkani.BLL.Concrete.ResultServiceBLL;
+using PlakDukkani.ViewModel.Constraints;
 using PlakDukkani.ViewModel.UserViewModels;
 using System;
 
@@ -27,7 +28,7 @@ namespace PlakDukkani.UI.MVC.Controllers
             if (ModelState.IsValid)
             {
                 ResultService<UserCreateVM> resultService = userService.Insert(user);
-                return RedirectToAction(nameof(Index),nameof(UserController));
+                return RedirectToAction(nameof(Login));
             }
             return View();
         }
@@ -39,7 +40,7 @@ namespace PlakDukkani.UI.MVC.Controllers
             ResultService<bool> result = userService.ActivateUser(id);
             if (result.Data)
             {
-                return RedirectToAction(nameof(Login), nameof(UserController));
+                return RedirectToAction(nameof(Login));
             }
             return View();
         }
@@ -59,11 +60,11 @@ namespace PlakDukkani.UI.MVC.Controllers
                 ResultService<bool> result = userService.CheckUserForLogin(user.Email, user.Password);
                 if (result.HasError)
                 {
-                    ViewBag.Message = result.Errors[0].ErrorMessage
+                    ViewBag.Message = UserMessage.LoginMessage;
                 }
                 else
                 {
-                    RedirectToAction(nameof(Index)), nameof((UserController));
+                    return RedirectToAction(nameof(Index), "Home");
                 }
             }
             return View();
