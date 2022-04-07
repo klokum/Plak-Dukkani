@@ -44,9 +44,28 @@ namespace PlakDukkani.UI.MVC.Controllers
             return View();
         }
         
+        [HttpGet]
         public IActionResult Login()
         {    
             
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(UserLoginVM user)
+        {
+            if (ModelState.IsValid)
+            {
+                ResultService<bool> result = userService.CheckUserForLogin(user.Email, user.Password);
+                if (result.HasError)
+                {
+                    ViewBag.Message = result.Errors[0].ErrorMessage
+                }
+                else
+                {
+                    RedirectToAction(nameof(Index)), nameof((UserController));
+                }
+            }
             return View();
         }
     }

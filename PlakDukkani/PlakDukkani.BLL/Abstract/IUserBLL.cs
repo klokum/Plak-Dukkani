@@ -9,5 +9,6 @@ namespace PlakDukkani.BLL.Abstract
     {
         public ResultService<UserCreateVM> Insert(UserCreateVM user);
         ResultService<bool> ActivateUser(Guid id);
+        ResultService<bool> CheckUserForLogin(string email, string password);
     }
 }

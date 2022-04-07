@@ -98,5 +98,17 @@ namespace PlakDukkani.BLL.Concrete
             }
         }
 
+        public ResultService<bool> CheckUserForLogin(string email, string password)
+        {
+            ResultService<bool> result = new ResultService<bool>();
+            User user = userRepository.Get(a => a.Email == email && a.Password==password && a.IsActive);
+            if (user == null)
+            {
+                result.AddError("Login Hatası", "Login Başarısız");
+                return result;
+            }
+            result.Data = true;
+            return result;
+        }
     }
 }

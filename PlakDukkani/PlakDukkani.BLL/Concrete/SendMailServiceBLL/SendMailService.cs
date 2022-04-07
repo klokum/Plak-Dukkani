@@ -18,7 +18,7 @@ namespace PlakDukkani.BLL.Concrete.SendMailServiceBLL
             msg.IsBodyHtml = true;
             msg.Body = string.Format("<!DOCTYPE html> <html> <head> <meta charset='utf-8'/> <title></title> </head> <body> <h1> Aktivasyon Maili </h1> <p> Merhaba {0} </p> <p> Sitemize Kayıt Olduğunuz İçin Teşekkür Ederiz </p> <br /> <p> Kayıtınızı aktifleştirmek için <a href='http://localhost:33077/User/ActivedUser/{1}'>linke tıklayınız. </p> </body> </html>", userName, activationCode);
 
-            msg.From = new MailAddress("cinemasystem@sinemamekani.com");
+            msg.From = new MailAddress("cinemasystem@sinemamekani.com");    //Buradaki gönderen mail kısmı çalışmıyor. Deneme amaçlı kullanılmıştı    
 
             SmtpClient smtp = new SmtpClient();
             smtp.Port = 587;
