@@ -52,7 +52,7 @@ namespace PlakDukkani.UI.MVC.Controllers
             if (Request.Cookies["cookie"] != null)
             {
                 string bilgi = Request.Cookies["cookie"];
-                string[] bilgiParcasi = bilgi.Split(" "); 
+                string[] bilgiParcasi = bilgi.Split("|"); 
                 UserLoginVM userLogin = new UserLoginVM();
                 userLogin.Email = bilgiParcasi[0];
                 userLogin.Password = bilgiParcasi[1];
@@ -69,7 +69,7 @@ namespace PlakDukkani.UI.MVC.Controllers
             {
                 CookieOptions cookieOptions = new CookieOptions();
                 cookieOptions.Expires = DateTime.Now.AddDays (5);
-                Response.Cookies.Append("cookie", user.Email + " " + user.Password, cookieOptions);
+                Response.Cookies.Append("cookie", user.Email + "|" + user.Password, cookieOptions);
             }
 
             if (ModelState.IsValid)
