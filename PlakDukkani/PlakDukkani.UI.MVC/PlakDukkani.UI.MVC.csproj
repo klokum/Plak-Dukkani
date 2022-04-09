@@ -228,10 +228,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PlakDukkani.BLL\PlakDukkani.BLL.csproj" />
   </ItemGroup>
 
