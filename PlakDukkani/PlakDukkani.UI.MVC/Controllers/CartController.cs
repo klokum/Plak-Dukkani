@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PlakDukkani.UI.MVC.Helpers;
 using PlakDukkani.UI.MVC.Models.CartItems;
 
 namespace PlakDukkani.UI.MVC.Controllers
@@ -10,5 +11,12 @@ namespace PlakDukkani.UI.MVC.Controllers
             return View();
         }
 
+        public IActionResult AddToCart(int id)
+        {
+            Cart cart = new Cart();
+            CartItem cartItem = new CartItem();
+            cart.Add(cartItem);
+            HttpContext.Session.Set<Cart>("cart", cart);
+        }
     }
 }
