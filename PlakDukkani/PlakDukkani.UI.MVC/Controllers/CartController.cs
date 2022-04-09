@@ -21,10 +21,15 @@ namespace PlakDukkani.UI.MVC.Controllers
         public IActionResult AddToCart(int id)
         {
             Cart cart = new Cart(); 
-            CartItem cartItem = new CartItem();
-            cart.Add(cartItem);
+
             ResultService<CartItem> result = albumService.GetCartById(id);
-            HttpContext.Session.Set<Cart>("cart", cart);
+            if (!result.HasError)
+            {
+                CartItem item = result.Data;
+                item.Quantity = 1;
+                cart.Add(item);
+                HttpContext.Session.Set<Cart>("cart", cart);
+            }
             return RedirectToAction("Index", "Home");
         }
     }
