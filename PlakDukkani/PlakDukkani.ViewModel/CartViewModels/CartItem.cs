@@ -1,4 +1,4 @@
-﻿namespace PlakDukkani.UI.MVC.Models.CartItems
+﻿namespace PlakDukkani.ViewModel.CartViewModels
 {
     public class CartItem   //Ürün
     {

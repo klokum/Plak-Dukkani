@@ -3,6 +3,7 @@ using PlakDukkani.BLL.Concrete.ResultServiceBLL;
 using PlakDukkani.DAL.Abstract;
 using PlakDukkani.Model.Entities;
 using PlakDukkani.ViewModel.AlbumViewModels;
+using PlakDukkani.ViewModel.CartViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,6 @@ namespace PlakDukkani.BLL.Concrete
 
             try
             {
-
                 List<SingleAlbumVM> singleAlbums = albumDAL.GetAll(null, a => a.Artist)
                     .OrderByDescending(a => a.CreatedDate).Take(12)
                     .Select(album => new SingleAlbumVM
@@ -45,5 +45,24 @@ namespace PlakDukkani.BLL.Concrete
 
             return resultService;
         }
+        public ResultService<CartItem> GetCartById(int id)
+        {
+            ResultService<CartItem> result = new ResultService<CartItem>();
+            Album album = albumDAL.Get(a => a.ID == id && a.Continued && a.IsActive);
+            if (album == null)
+            {
+                result.AddError("Null Hatası", "id ile uyumlu album yok");
+                return result;
+            }
+            result.Data = new CartItem()
+            {
+                ID = album.ID,
+                Title = album.Title,
+                Discount = album.Discount,
+                Price = album.Price
+            };
+            return result;
+        }
+
     }
 }

@@ -231,4 +231,8 @@
     <ProjectReference Include="..\PlakDukkani.BLL\PlakDukkani.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\CartItems\" />
+  </ItemGroup>
+
 </Project>
