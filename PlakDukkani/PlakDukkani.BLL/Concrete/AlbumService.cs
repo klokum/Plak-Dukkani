@@ -21,7 +21,7 @@ namespace PlakDukkani.BLL.Concrete
         public ResultService<AlbumDetailVM> GetAlbumById(int id)
         {
             ResultService<AlbumDetailVM> result = new ResultService<AlbumDetailVM>();
-            Album album = albumDAL.Get(a => a.ID == id && a.Continued && a.IsActive, a => a.Artist, x => x.Genre);
+            Album album = albumDAL.Get(a => a.ID == id && a.Continued && a.IsActive, a => a.Artist, a => a.Genre);
             if (album == null)
             {
                 result.AddError("Null Hatası", "id ile uyumlu album yok");
@@ -32,9 +32,9 @@ namespace PlakDukkani.BLL.Concrete
                 ID = album.ID,
                 Title = album.Title,
                 GenreName = album.Genre.Name,
-                AlbumArtUrl = album.AlbumArtUrl,
+                ArtistFullName = album.Artist.FullName,
                 Discount = album.Discount,
-                FullName = album.Artist.FullName,
+                AlbumArtUrl = album.AlbumArtUrl,
                 Price = album.Price
             };
             return result;
@@ -43,19 +43,18 @@ namespace PlakDukkani.BLL.Concrete
         public ResultService<List<SingleAlbumVM>> GetSingleAlbums()
         {
             ResultService<List<SingleAlbumVM>> resultService = new ResultService<List<SingleAlbumVM>>();
-
             try
             {
-                List<SingleAlbumVM> singleAlbums = albumDAL.GetAll(null, a => a.IsActive, a => a.Artist, a => a.Genre) 
-                    .OrderByDescending(a => a.CreatedDate).Take(12)
-                    .Select(album => new SingleAlbumVM
-                    {
-                        ID = album.ID,
-                        FullName = album.Artist.FullName,
-                        AlbumArtUrl = album.AlbumArtUrl,
-                        Price = album.Price,
-                        Title = album.Title,
-                    }).ToList();
+                List<SingleAlbumVM> singleAlbums = albumDAL.GetAll(a => a.IsActive && a.Continued, a => a.Artist)
+                        .OrderByDescending(a => a.CreatedDate).Take(12)
+                        .Select(album => new SingleAlbumVM
+                        {
+                            ID = album.ID,
+                            FullName = album.Artist.FullName,
+                            AlbumArtUrl = album.AlbumArtUrl,
+                            Price = album.Price,
+                            Title = album.Title
+                        }).ToList();
                 resultService.Data = singleAlbums;
             }
             catch (Exception ex)
