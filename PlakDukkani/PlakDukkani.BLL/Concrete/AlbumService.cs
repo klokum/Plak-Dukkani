@@ -18,7 +18,27 @@ namespace PlakDukkani.BLL.Concrete
         {
             this.albumDAL = albumDAL;
         }
-
+        public ResultService<AlbumDetailVM> GetAlbumById(int id)
+        {
+            ResultService<AlbumDetailVM> result = new ResultService<AlbumDetailVM>();
+            Album album = albumDAL.Get(a => a.ID == id && a.Continued && a.IsActive, a => a.Artist, x => x.Genre);
+            if (album == null)
+            {
+                result.AddError("Null Hatası", "id ile uyumlu album yok");
+                return result;
+            }
+            result.Data = new AlbumDetailVM()
+            {
+                ID = album.ID,
+                Title = album.Title,
+                GenreName = album.Genre.Name,
+                AlbumArtUrl = album.AlbumArtUrl,
+                Discount = album.Discount,
+                FullName = album.Artist.FullName,
+                Price = album.Price
+            };
+            return result;
+        }
 
         public ResultService<List<SingleAlbumVM>> GetSingleAlbums()
         {
@@ -26,7 +46,7 @@ namespace PlakDukkani.BLL.Concrete
 
             try
             {
-                List<SingleAlbumVM> singleAlbums = albumDAL.GetAll(null, a => a.Artist)
+                List<SingleAlbumVM> singleAlbums = albumDAL.GetAll(null, a => a.IsActive, a => a.Artist, a => a.Genre) 
                     .OrderByDescending(a => a.CreatedDate).Take(12)
                     .Select(album => new SingleAlbumVM
                     {
@@ -45,6 +65,7 @@ namespace PlakDukkani.BLL.Concrete
 
             return resultService;
         }
+
         public ResultService<CartItem> GetCartById(int id)
         {
             ResultService<CartItem> result = new ResultService<CartItem>();

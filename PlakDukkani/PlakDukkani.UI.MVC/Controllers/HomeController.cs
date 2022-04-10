@@ -36,7 +36,7 @@ namespace PlakDukkani.UI.MVC.Controllers
 
         public IActionResult AlbumDetail(int id)
         {
-            albumService.GetAlbumById(id); 
+            ResultService<AlbumDetailVM> result = albumService.GetAlbumById(id); 
             return View();
         }
 

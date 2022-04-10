@@ -9,6 +9,7 @@ namespace PlakDukkani.BLL.Abstract
     public interface IAlbumBLL : IBaseBLL<Album>
     {
         ResultService<List<SingleAlbumVM>> GetSingleAlbums();
+        ResultService<AlbumDetailVM> GetAlbumById(int id);
         ResultService<CartItem> GetCartById(int id);
     }
 }
