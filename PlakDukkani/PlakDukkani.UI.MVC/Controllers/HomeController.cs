@@ -34,6 +34,12 @@ namespace PlakDukkani.UI.MVC.Controllers
 
         }
 
+        public IActionResult AlbumDetail(int id)
+        {
+            albumService.GetAlbumById(id); 
+            return View();
+        }
+
         public IActionResult AlbumStore()
         {
             return View();
