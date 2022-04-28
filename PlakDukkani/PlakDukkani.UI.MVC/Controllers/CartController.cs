@@ -20,8 +20,12 @@ namespace PlakDukkani.UI.MVC.Controllers
 
         public IActionResult AddToCart(int id)
         {
-            Cart cart = new Cart(); 
-
+            Cart cart = HttpContext.Session.Get<Cart>("cart");
+            if (cart == null)
+            {
+                cart = new Cart();
+            }
+            
             ResultService<CartItem> result = albumService.GetCartById(id);
             if (!result.HasError)
             {
@@ -30,6 +34,7 @@ namespace PlakDukkani.UI.MVC.Controllers
                 cart.Add(item);
                 HttpContext.Session.Set<Cart>("cart", cart);
             }
+
             return RedirectToAction("Index", "Home");
         }
     }
