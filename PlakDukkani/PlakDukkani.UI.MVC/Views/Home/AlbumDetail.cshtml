@@ -24,7 +24,7 @@
                             <p>@Model.GenreName</p>
                             <p>@Model.ArtistFullName</p>
                             <div class="oneMusic-buttons-area mb-100">
-                                <a href="#" class="btn oneMusic-btn m-2">Sepete Ekle<i class="fa fa-cart-plus"></i></a>
+                                <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.ID" class="btn oneMusic-btn m-2">Sepete Ekle<i class="fa fa-cart-plus"></i></a>
                             </div>
                         </div>
                     </div>

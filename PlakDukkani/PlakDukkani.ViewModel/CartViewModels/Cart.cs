@@ -5,7 +5,9 @@ namespace PlakDukkani.ViewModel.CartViewModels
 {
     public class Cart   //Sepet
     {
-        private Dictionary<int, CartItem> sepet = new Dictionary<int, CartItem>();
+        private static Dictionary<int, CartItem> sepet = new Dictionary<int, CartItem>();
+
+        public List<CartItem> GetCartItems => sepet.Values.ToList();
 
         public void Add(CartItem item)
         {

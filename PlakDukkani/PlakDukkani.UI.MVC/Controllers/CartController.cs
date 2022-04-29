@@ -3,6 +3,7 @@ using PlakDukkani.BLL.Abstract;
 using PlakDukkani.BLL.Concrete.ResultServiceBLL;
 using PlakDukkani.UI.MVC.Helpers;
 using PlakDukkani.ViewModel.CartViewModels;
+using PlakDukkani.ViewModel.Constraints;
 
 namespace PlakDukkani.UI.MVC.Controllers
 {
@@ -15,7 +16,13 @@ namespace PlakDukkani.UI.MVC.Controllers
         }
         public IActionResult Index()    //Sepet sayfası
         {
-            return View();
+            Cart cart = HttpContext.Session.Get<Cart>("cart");
+            if (cart == null)
+            {
+                ViewBag.Message = CartMessage.CartBosHatasi;
+                return View();
+            }
+            return View(cart);
         }
 
         public IActionResult AddToCart(int id)

@@ -20,6 +20,7 @@ namespace PlakDukkani.UI.MVC
         {
             services.AddControllersWithViews();
             services.AddScopeBLL();
+            services.AddSession();
 
 
             //services.AddScoped<IAlbumBLL, AlbumService>();  //AddScoped() bizim için nesne üretmemizi saðlayan bir metotdur.
@@ -33,10 +34,11 @@ namespace PlakDukkani.UI.MVC
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseStaticFiles();
             }
 
+            app.UseSession();
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
